@@ -1,0 +1,12 @@
+{
+    "code": "alchemicalglassblock",
+    "creativeinventory": {
+        "general": [ "*" ],
+        "saltandsulfur": [ "*" ]
+    },
+    "drawtype": "Cube",
+    "texture": {
+        "base": "block/alchemist-glass"
+    },
+    "renderpass": "transparent"
+}
