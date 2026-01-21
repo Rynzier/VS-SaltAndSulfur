@@ -4,9 +4,18 @@
         "general": [ "*" ],
         "saltandsulfur": [ "*" ]
     },
-    "drawtype": "Cube",
-    "texture": {
-        "base": "block/alchemist-glass"
+    "blockmaterial": "glass",
+    "shape": { "base": "game:block/glass/framed" },
+    "drawtype": "json",
+    "textures": {
+        "material": { "base": "block/alchemist-glass"},
+        "frame": { "base": "block/alchemist-glass-frame"}
     },
+    "vertexflags": {
+        "zoffset": 2
+    },
+    "sideopaque": { "all": false },
+    "facecullmode": "mergematerial",
+    "lightabsorption": 0,
     "renderpass": "transparent"
 }
