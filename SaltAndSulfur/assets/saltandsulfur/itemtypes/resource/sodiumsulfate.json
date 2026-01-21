@@ -8,6 +8,16 @@
     "texture": {
         "base": "block/alchemist-glass"
     },
+    
+    "combustibleprops": {
+	"meltingpoint": 1000,
+	"meltingduration": 10,
+	"smeltedratio": 1,
+	"smeltedstack": { "type": "item", "code": "sodiumsulfide" },
+	"requirescontainer": false
+    },
+
+    "maxstacksize": 64,
 
     "guitransform": {
 	"translation": { "x": 0, "y": 0, "z": 0 },

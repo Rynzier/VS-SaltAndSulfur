@@ -1,0 +1,23 @@
+{
+    "code": "sodium-sulfate",
+
+    "ingredients": [
+        {
+            "type": "item",
+            "code": "game:salt",
+            "quantity": 2
+        },
+        {
+            "type": "item",
+            "code": "game:acid-full-sulfuric",
+            "litres": 1,
+            "consumelitres": 1
+        }
+    ],
+
+    "output": {
+        "type": "item",
+        "code": "sodiumsulfide",
+        "quantity": 1
+    }
+}
