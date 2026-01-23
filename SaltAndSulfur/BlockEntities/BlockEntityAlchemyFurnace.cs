@@ -3,8 +3,7 @@ using Vintagestory.API.MathTools;
 
 namespace SaltAndSulfur.BlockEntities
 {
-    public class BlockEntityAlchemyFurnace : BlockEntity
+    internal class BlockEntityAlchemyFurnace : BlockEntity
     {
-
     }
 }

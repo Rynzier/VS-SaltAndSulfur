@@ -1,5 +1,10 @@
 {
     "code": "alchemyfurnace",
     "class": "saltandsulfur.alchemyfurnace",
+
+    "creativeinventory": {
+        "general": [ "*" ],
+        "saltandsulfur": [ "*" ]
+    },
     "drawtype": "cube"
 }
