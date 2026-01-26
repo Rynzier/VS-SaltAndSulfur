@@ -3,8 +3,8 @@
     "class": "saltandsulfur.BlockAlchemyFurnace",
     "entityclass": "saltandsulfur.BlockEntityAlchemyFurnace",
 
-    "behaviours": [
-        { "name": "BlockEntityInteract"}
+    "behaviors": [
+        { "name": "BlockEntityInteractable"}
     ],
 
     "creativeinventory": {
