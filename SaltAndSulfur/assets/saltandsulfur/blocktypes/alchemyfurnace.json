@@ -1,6 +1,7 @@
 {
     "code": "alchemyfurnace",
-    "class": "saltandsulfur.alchemyfurnace",
+    "class": "saltandsulfur.BlockAlchemyFurnace",
+    "entityclass": "saltandsulfur.BlockEntityAlchemyFurnace",
 
     "creativeinventory": {
         "general": [ "*" ],

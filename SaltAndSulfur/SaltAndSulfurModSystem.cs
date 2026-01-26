@@ -8,8 +8,8 @@ public class SaltAndSulfurModSystem : ModSystem
 {
     public override void Start(ICoreAPI api)
     {
-        api.RegisterBlockClass(Mod.Info.ModID + ".alchemyfurnace", typeof(Blocks.BlockAlchemyFurnace));
-        api.RegisterBlockEntityClass(Mod.Info.ModID + ".alchemyfurnace", typeof(BlockEntities.BlockEntityAlchemyFurnace));
+        api.RegisterBlockClass(Mod.Info.ModID + ".BlockAlchemyFurnace", typeof(BlockAlchemyFurnace));
+        api.RegisterBlockEntityClass(Mod.Info.ModID + ".BlockEntityAlchemyFurnace", typeof(BlockEntityAlchemyFurnace));
     }
 }
 

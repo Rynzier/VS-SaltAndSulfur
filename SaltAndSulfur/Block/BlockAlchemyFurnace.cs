@@ -6,9 +6,9 @@ using Vintagestory.API.Util;
 
 #nullable disable
 
-namespace SaltAndSulfur.Blocks
+namespace SaltAndSulfur
 {
-    internal class BlockAlchemyFurnace : Block
+    public class BlockAlchemyFurnace : Block
     {
 
     }
