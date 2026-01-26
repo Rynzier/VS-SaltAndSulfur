@@ -16,7 +16,15 @@
       <HintPath>$(VINTAGE_STORY)/Mods/VSSurvivalMod.dll</HintPath>
       <Private>False</Private>
     </Reference>
-  </ItemGroup>
+    <Reference Include="VSEssentials">
+      <HintPath>$(VINTAGE_STORY)/Mods/VSEssentials.dll</HintPath>
+      <Private>False</Private>
+      </Reference>
+    <Reference Include="VSCreativeMod">
+      <HintPath>$(VINTAGE_STORY)/Mods/VSCreativeMod.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+</ItemGroup>
 
 <ItemGroup>
   <Content Include="modinfo.json">
