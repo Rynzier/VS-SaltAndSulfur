@@ -11,9 +11,24 @@ namespace SaltAndSulfur
 {
     public class BlockEntityAlchemyFurnace : BlockEntity, IInteractable
     {
+        protected InventoryAlchemyFurnace inventory;
+        protected GuiDialogAlchemyFurnace clientDialog;
+
+        public string DialogTitle => Block?.GetPlacedBlockName(Api?.World, Pos);
+        public InventoryBase Inventory => inventory;
+
+        public BlockEntityAlchemyFurnace()
+        {
+            inventory = new InventoryAlchemyFurnace(null, null);
+        }
+
         public bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
         {
-            Console.WriteLine("Test!");
+            if (world.Api is ICoreClientAPI capi)
+            {
+                var dlg = new GuiDialogAlchemyFurnace("Alchemy Furnace", inventory, this.Pos, capi);
+                dlg.TryOpen();
+            }
             return true;
         }
     }
