@@ -26,7 +26,7 @@ namespace SaltAndSulfur
         {
             if (world.Api is ICoreClientAPI capi)
             {
-                var dlg = new GuiDialogAlchemyFurnace("Alchemy Furnace", inventory, this.Pos, capi);
+                var dlg = new GuiDialogAlchemyFurnace(DialogTitle, Inventory, this.Pos, capi);
                 dlg.TryOpen();
             }
             return true;
