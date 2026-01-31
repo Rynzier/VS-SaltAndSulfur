@@ -4,7 +4,7 @@
     "entityclass": "saltandsulfur.BlockEntityAlchemyFurnace",
 
     "behaviors": [
-        { "name": "BlockEntityInteract"}
+        { "name": "Container"}
     ],
 
     "creativeinventory": {
