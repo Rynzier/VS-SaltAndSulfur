@@ -12,7 +12,7 @@ namespace SaltAndSulfur
 
         public ItemSlot[] Slots => slots;
 
-        public override int Count => 5;
+        public override int Count => 7;
 
         public override ItemSlot this[int slotId]
         {
@@ -44,7 +44,7 @@ namespace SaltAndSulfur
         public InventoryAlchemyFurnace(string inventoryID, ICoreAPI api)
             : base(inventoryID, api)
         {
-            slots = GenEmptySlots(5);
+            slots = GenEmptySlots(7);
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)
