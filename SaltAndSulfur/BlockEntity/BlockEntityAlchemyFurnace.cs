@@ -41,6 +41,7 @@ namespace SaltAndSulfur
         {
             base.Initialize(api);
             inventory.LateInitialize("alchemyfurnace-" + Pos.X + "/" + Pos.Y + "/" + Pos.Z, api);
+            inventory.AfterBlocksLoaded(Api.World);
         }
 
         public override bool OnPlayerRightClick(IPlayer byPlayer, BlockSelection blockSel)
@@ -92,16 +93,12 @@ namespace SaltAndSulfur
         {
             base.FromTreeAttributes(tree, worldAccessForResolve);
             inventory.FromTreeAttributes(tree.GetTreeAttribute("inventory"));
-
-            if (Api != null)
-            {
-                inventory.AfterBlocksLoaded(Api.World);
-            }
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)
         {
             base.ToTreeAttributes(tree);
+            Api.Logger.Debug("Saving furnace!");
             ITreeAttribute invtree = new TreeAttribute();
             inventory.ToTreeAttributes(invtree);
             tree["inventory"] = invtree;
