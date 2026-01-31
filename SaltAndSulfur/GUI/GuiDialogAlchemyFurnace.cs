@@ -33,7 +33,7 @@ public class GuiDialogAlchemyFurnace : GuiDialogBlockEntity
             hoveredSlot = null;
         }
 
-        ElementBounds furnaceBounds = ElementBounds.Fixed(0, 0, 200, 90);
+        ElementBounds furnaceBounds = ElementBounds.Fixed(0, 0, 350, 230);
 
         ElementBounds bgBounds = ElementBounds.Fill.WithFixedPadding(GuiStyle.ElementToDialogPadding);
         bgBounds.BothSizing = ElementSizing.FitToChildren;
@@ -43,7 +43,14 @@ public class GuiDialogAlchemyFurnace : GuiDialogBlockEntity
             .WithFixedAlignmentOffset(-GuiStyle.DialogToScreenPadding, 0);
 
         ElementBounds inputSlotBounds1 = ElementStdBounds.SlotGrid(EnumDialogArea.None, 0, 30, 1, 1);
-        ElementBounds inputSlotBounds2 = ElementStdBounds.SlotGrid(EnumDialogArea.None, 50, 30, 1, 1);
+        ElementBounds inputSlotBounds2 = ElementStdBounds.SlotGrid(EnumDialogArea.None, 0, 80, 1, 1);
+        ElementBounds inputSlotBounds3 = ElementStdBounds.SlotGrid(EnumDialogArea.None, 0, 130, 1, 1);
+
+        ElementBounds outputSlotBounds1 = ElementStdBounds.SlotGrid(EnumDialogArea.None, 300, 30, 1, 1);
+        ElementBounds outputSlotBounds2 = ElementStdBounds.SlotGrid(EnumDialogArea.None, 300, 80, 1, 1);
+        ElementBounds outputSlotBounds3 = ElementStdBounds.SlotGrid(EnumDialogArea.None, 300, 130, 1, 1);
+
+        ElementBounds fuelSlotBounds = ElementStdBounds.SlotGrid(EnumDialogArea.None, 150, 180, 1, 1);
 
         ClearComposers();
         SingleComposer = capi.Gui
@@ -53,6 +60,13 @@ public class GuiDialogAlchemyFurnace : GuiDialogBlockEntity
             .BeginChildElements(bgBounds)
                 .AddItemSlotGrid(Inventory, SendInvPacket, 1, new int[] { 0 }, inputSlotBounds1, "inputSlot1")
                 .AddItemSlotGrid(Inventory, SendInvPacket, 1, new int[] { 1 }, inputSlotBounds2, "inputSlot2")
+                .AddItemSlotGrid(Inventory, SendInvPacket, 1, new int[] { 2 }, inputSlotBounds3, "inputSlot3")
+
+                .AddItemSlotGrid(Inventory, SendInvPacket, 1, new int[] { 3 }, outputSlotBounds1, "outputSlot1")
+                .AddItemSlotGrid(Inventory, SendInvPacket, 1, new int[] { 4 }, outputSlotBounds2, "outputSlot2")
+                .AddItemSlotGrid(Inventory, SendInvPacket, 1, new int[] { 5 }, outputSlotBounds3, "outputSlot3")
+
+                .AddItemSlotGrid(Inventory, SendInvPacket, 1, new int[] { 6 }, fuelSlotBounds, "fuelSlot")
             .EndChildElements()
             .Compose()
             ;
