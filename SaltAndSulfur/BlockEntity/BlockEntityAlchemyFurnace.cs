@@ -27,22 +27,6 @@ namespace SaltAndSulfur
             get { return "alchemyfurnace"; }
         }
 
-        // Smelting variables
-
-        // Half second tick and full tick temperatures
-        public float prevFurnaceTemperature = 20;
-        public float furnaceTemperature = 20;
-
-        // Maximum temperature for current fuel
-        public int maxTemperature;
-        // How long the inputs have been cooking
-        public float inputStackCookingTime;
-        // How much of the current fuel is consumed
-        public float fuelBurnTime;
-        // How much fuel is available
-        public float maxFuelBurnTime;
-        public bool IsBurning;
-
         public BlockEntityAlchemyFurnace()
         {
             inventory = new InventoryAlchemyFurnace(null, null);
@@ -60,78 +44,6 @@ namespace SaltAndSulfur
             inventory.LateInitialize("alchemyfurnace-" + Pos.X + "/" + Pos.Y + "/" + Pos.Z, api);
             inventory.AfterBlocksLoaded(Api.World);
 
-            RegisterGameTickListener(OnBurnTick, 100);
-        }
-
-        private void OnBurnTick(float dt)
-        {
-            if (Api is ICoreClientAPI) return;
-
-            if (fuelBurnTime > 0)
-            {
-                fuelBurnTime -= dt;
-
-                if (fuelBurnTime <= 0)
-                {
-                    fuelBurnTime = 0;
-                    maxFuelBurnTime = 0;
-                }
-            }
-
-            if (IsBurning)
-            {
-                furnaceTemperature = changeTemperature(furnaceTemperature, maxTemperature, dt);
-            }
-        }
-
-        public bool isInputValid()
-        {
-            return false;
-        }
-
-        public float changeTemperature(float fromTemp, float toTemp, float dt)
-        {
-            float diff = Math.Abs(fromTemp - toTemp);
-
-            dt = dt + dt * (diff / 28);
-
-            if (diff < dt)
-            {
-                return toTemp;
-            }
-
-            if (fromTemp > toTemp)
-            {
-                dt = -dt;
-            }
-
-            if (Math.Abs(fromTemp - toTemp) < 1)
-            {
-                return toTemp;
-            }
-
-            return fromTemp + dt;
-        }
-
-        public void heatInput(float dt)
-        {
-        }
-
-        float GetTemp(int inputid)
-        {
-            ItemStack stack = inputSlots[inputid].Itemstack;
-            if (stack == null) return 20;
-
-            return stack.Collectible.GetTemperature(Api.World, stack);
-
-        }
-
-        void SetTemp(int inputid, float value)
-        {
-            ItemStack stack = inputSlots[inputid].Itemstack;
-            if (stack == null) return;
-
-            stack.Collectible.SetTemperature(Api.World, stack, value);
         }
 
         public override bool OnPlayerRightClick(IPlayer byPlayer, BlockSelection blockSel)
@@ -143,7 +55,11 @@ namespace SaltAndSulfur
                     clientDialog = new GuiDialogAlchemyFurnace(DialogTitle, Inventory, Pos, Api as ICoreClientAPI);
                     return clientDialog;
                 });
+
+                BEBehaviorAlchemySmelt test = this.GetBehavior<BEBehaviorAlchemySmelt>();
+                test.TestBehaviour();
             }
+
             return true;
         }
 

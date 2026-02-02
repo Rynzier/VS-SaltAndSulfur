@@ -10,6 +10,7 @@ public class SaltAndSulfurModSystem : ModSystem
     {
         api.RegisterBlockClass(Mod.Info.ModID + ".BlockAlchemyFurnace", typeof(BlockAlchemyFurnace));
         api.RegisterBlockEntityClass(Mod.Info.ModID + ".BlockEntityAlchemyFurnace", typeof(BlockEntityAlchemyFurnace));
+        api.RegisterBlockEntityBehaviorClass("AlchemySmelt", typeof(BEBehaviorAlchemySmelt));
     }
 }
 
