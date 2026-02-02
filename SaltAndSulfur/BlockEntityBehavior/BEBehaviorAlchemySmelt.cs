@@ -33,6 +33,45 @@ namespace SaltAndSulfur
             }
         }
 
+        public void UpdateHeat(ItemSlot[] inputs, ItemSlot fuel, float delta)
+        {
+            CombustibleProperties currCopts;
+
+            if ((fuelBurnTime >= maxFuelBurnTime) || (!isBurning))
+            {
+                fuelBurnTime = 0;
+                if (fuel.Itemstack != null)
+                {
+                    currCopts = fuel.Itemstack.Collectible.CombustibleProps;
+                    maxFuelBurnTime = currCopts.BurnDuration;
+                    maxTemperature = currCopts.BurnTemperature;
+
+                    fuel.Itemstack.StackSize -= 1;
+                    if (fuel.Itemstack.StackSize <= 0)
+                    {
+                        fuel.Itemstack = null;
+                    }
+
+                    isBurning = true;
+                    Api.Logger.Debug("Glorped fuel!");
+                }
+                else
+                {
+                    isBurning = false;
+                }
+            }
+            else if ((fuelBurnTime < maxFuelBurnTime) && isBurning)
+            {
+                fuelBurnTime += delta;
+                furnaceTemperature = maxTemperature;
+                for (int i = 0; i < inputs.Length; i++)
+                {
+                    if (inputs[i].Itemstack == null) continue;
+                    inputs[i].Itemstack.Collectible.SetTemperature(Api.World, inputs[i].Itemstack, furnaceTemperature);
+                }
+            }
+        }
+
         public void TestBehaviour()
         {
             Api.Logger.Debug("Behavior is working :3");

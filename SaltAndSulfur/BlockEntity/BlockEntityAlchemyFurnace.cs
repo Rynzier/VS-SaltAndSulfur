@@ -44,6 +44,13 @@ namespace SaltAndSulfur
             inventory.LateInitialize("alchemyfurnace-" + Pos.X + "/" + Pos.Y + "/" + Pos.Z, api);
             inventory.AfterBlocksLoaded(Api.World);
 
+            RegisterGameTickListener(UpdateFurnace, 100);
+        }
+
+        public void UpdateFurnace(float delta)
+        {
+            BEBehaviorAlchemySmelt smeltBehavior = this.GetBehavior<BEBehaviorAlchemySmelt>();
+            smeltBehavior.UpdateHeat(inputSlots, fuelSlot, delta);
         }
 
         public override bool OnPlayerRightClick(IPlayer byPlayer, BlockSelection blockSel)

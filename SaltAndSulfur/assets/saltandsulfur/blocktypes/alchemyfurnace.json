@@ -4,7 +4,9 @@
     "entityclass": "saltandsulfur.BlockEntityAlchemyFurnace",
 
     "behaviors": [
-        { "name": "Container"},
+        { "name": "Container"}
+    ],
+    "entitybehaviors": [
         { "name": "AlchemySmelt"}
     ],
 
