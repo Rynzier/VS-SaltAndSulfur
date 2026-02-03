@@ -12,12 +12,12 @@ namespace SaltAndSulfur
 {
     public class BEBehaviorAlchemySmelt : BlockEntityBehavior
     {
-        public float furnaceTemperature = 20;
-        public int maxTemperature;
-        public float inputCookingTime = 0;
-        public float fuelBurnTime = 0;
-        public float maxFuelBurnTime = 0;
-        public bool isBurning = false;
+        private float furnaceTemperature = 20;
+        private int maxTemperature;
+        private float inputCookingTime = 0;
+        private float fuelBurnTime = 0;
+        private float maxFuelBurnTime = 0;
+        private bool isBurning = false;
 
         public BEBehaviorAlchemySmelt(BlockEntity be) : base(be) { }
 
@@ -66,15 +66,32 @@ namespace SaltAndSulfur
                 furnaceTemperature = maxTemperature;
                 for (int i = 0; i < inputs.Length; i++)
                 {
-                    if (inputs[i].Itemstack == null) continue;
+                    if (inputs[i].Itemstack == null || inputs[i].Itemstack.Collectible.CombustibleProps == null) continue;
                     inputs[i].Itemstack.Collectible.SetTemperature(Api.World, inputs[i].Itemstack, furnaceTemperature);
                 }
             }
         }
 
+
         public void TestBehaviour()
         {
             Api.Logger.Debug("Behavior is working :3");
         }
+
+        public float FurnaceTemperature
+        {
+            get { return furnaceTemperature; }
+        }
+
+        public float BurnTimeLeft
+        {
+            get { return (fuelBurnTime / maxFuelBurnTime); }
+        }
+
+        public float SmeltProgress
+        {
+            get { return inputCookingTime; }
+        }
+
     }
 }

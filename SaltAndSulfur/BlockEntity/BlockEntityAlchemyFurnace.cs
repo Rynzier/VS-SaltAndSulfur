@@ -51,6 +51,10 @@ namespace SaltAndSulfur
         {
             BEBehaviorAlchemySmelt smeltBehavior = this.GetBehavior<BEBehaviorAlchemySmelt>();
             smeltBehavior.UpdateHeat(inputSlots, fuelSlot, delta);
+            float temp = smeltBehavior.FurnaceTemperature;
+            float burnTime = smeltBehavior.BurnTimeLeft;
+            float cookProg = smeltBehavior.SmeltProgress;
+            Api.Logger.Debug("Temperature: {0} | Remaining Fuel: {1} | Cook Progress: {2}", [temp, burnTime, cookProg]);
         }
 
         public override bool OnPlayerRightClick(IPlayer byPlayer, BlockSelection blockSel)
