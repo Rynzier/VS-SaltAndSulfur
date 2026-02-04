@@ -55,10 +55,6 @@ namespace SaltAndSulfur
 
         public void UpdateFurnace(float delta)
         {
-            if (Api.Side == EnumAppSide.Server)
-            {
-                MarkDirty();
-            }
             BEBehaviorAlchemySmelt smeltBehavior = this.GetBehavior<BEBehaviorAlchemySmelt>();
             smeltBehavior.UpdateHeat(inputSlots, fuelSlot, delta);
             float temp = smeltBehavior.FurnaceTemperature;
@@ -67,6 +63,7 @@ namespace SaltAndSulfur
             if (Api.Side == EnumAppSide.Server)
             {
                 Api.Logger.Debug("Temperature: {0} | Remaining Fuel: {1} | Cook Progress: {2}", [temp, burnTime, cookProg]);
+                MarkDirty();
             }
         }
 
