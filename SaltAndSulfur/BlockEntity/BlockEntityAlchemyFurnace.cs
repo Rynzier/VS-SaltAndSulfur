@@ -35,6 +35,12 @@ namespace SaltAndSulfur
 
         private void OnSlotModifid(int slotid)
         {
+            Block = Api.World.BlockAccessor.GetBlock(Pos);
+
+            if (Api is ICoreClientAPI && clientDialog != null)
+            {
+                return;
+            }
             return;
         }
 
@@ -49,6 +55,10 @@ namespace SaltAndSulfur
 
         public void UpdateFurnace(float delta)
         {
+            if (Api.Side == EnumAppSide.Server)
+            {
+                MarkDirty();
+            }
             BEBehaviorAlchemySmelt smeltBehavior = this.GetBehavior<BEBehaviorAlchemySmelt>();
             smeltBehavior.UpdateHeat(inputSlots, fuelSlot, delta);
             float temp = smeltBehavior.FurnaceTemperature;
@@ -112,6 +122,11 @@ namespace SaltAndSulfur
 
         }
 
+        public override void OnBlockRemoved()
+        {
+            base.OnBlockRemoved();
+            UnregisterAllTickListeners();
+        }
 
         public ItemSlot[] inputSlots
         {

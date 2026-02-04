@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Vintagestory.API.Client;
+using Vintagestory.API.Server;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
@@ -89,6 +90,10 @@ namespace SaltAndSulfur
             }
         }
 
+        public void ChangeTemperature()
+        {
+
+        }
 
         public void TestBehaviour()
         {
