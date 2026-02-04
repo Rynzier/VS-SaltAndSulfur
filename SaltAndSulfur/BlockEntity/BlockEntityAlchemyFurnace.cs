@@ -54,7 +54,10 @@ namespace SaltAndSulfur
             float temp = smeltBehavior.FurnaceTemperature;
             float burnTime = smeltBehavior.BurnTimeLeft;
             float cookProg = smeltBehavior.SmeltProgress;
-            Api.Logger.Debug("Temperature: {0} | Remaining Fuel: {1} | Cook Progress: {2}", [temp, burnTime, cookProg]);
+            if (Api.Side == EnumAppSide.Server)
+            {
+                Api.Logger.Debug("Temperature: {0} | Remaining Fuel: {1} | Cook Progress: {2}", [temp, burnTime, cookProg]);
+            }
         }
 
         public override bool OnPlayerRightClick(IPlayer byPlayer, BlockSelection blockSel)

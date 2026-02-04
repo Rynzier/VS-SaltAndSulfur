@@ -36,6 +36,7 @@ namespace SaltAndSulfur
         public void UpdateHeat(ItemSlot[] inputs, ItemSlot fuel, float delta)
         {
             CombustibleProperties currCopts;
+            bool[] atTemp = [false, false, false];
 
             if ((fuelBurnTime >= maxFuelBurnTime) || (!isBurning))
             {
@@ -53,7 +54,6 @@ namespace SaltAndSulfur
                     }
 
                     isBurning = true;
-                    Api.Logger.Debug("Glorped fuel!");
                 }
                 else
                 {
@@ -68,6 +68,23 @@ namespace SaltAndSulfur
                 {
                     if (inputs[i].Itemstack == null || inputs[i].Itemstack.Collectible.CombustibleProps == null) continue;
                     inputs[i].Itemstack.Collectible.SetTemperature(Api.World, inputs[i].Itemstack, furnaceTemperature);
+
+                    float currentTemp = inputs[i].Itemstack.Collectible.GetTemperature(Api.World, inputs[i].Itemstack);
+                    float targetTemp = inputs[i].Itemstack.Collectible.CombustibleProps.MeltingPoint;
+                    if (currentTemp >= targetTemp)
+                    {
+                        atTemp[i] = true;
+                    }
+                    else
+                    {
+                        atTemp[i] = false;
+                    }
+
+                }
+
+                if (atTemp[0] || atTemp[1] || atTemp[2])
+                {
+                    inputCookingTime += delta;
                 }
             }
         }
