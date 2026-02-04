@@ -38,6 +38,8 @@ namespace SaltAndSulfur
         {
             CombustibleProperties currCopts;
             bool[] atTemp = [false, false, false];
+            float meanTemp = 0;
+            float highTarget = 0;
 
             if ((fuelBurnTime >= maxFuelBurnTime) || (!isBurning))
             {
@@ -68,10 +70,12 @@ namespace SaltAndSulfur
                 for (int i = 0; i < inputs.Length; i++)
                 {
                     if (inputs[i].Itemstack == null || inputs[i].Itemstack.Collectible.CombustibleProps == null) continue;
-                    inputs[i].Itemstack.Collectible.SetTemperature(Api.World, inputs[i].Itemstack, furnaceTemperature);
+                    HeatToFurnaceTemp(inputs[i], delta);
 
                     float currentTemp = inputs[i].Itemstack.Collectible.GetTemperature(Api.World, inputs[i].Itemstack);
                     float targetTemp = inputs[i].Itemstack.Collectible.CombustibleProps.MeltingPoint;
+                    if (highTarget < targetTemp) highTarget = targetTemp;
+
                     if (currentTemp >= targetTemp)
                     {
                         atTemp[i] = true;
@@ -80,19 +84,59 @@ namespace SaltAndSulfur
                     {
                         atTemp[i] = false;
                     }
-
+                    meanTemp += currentTemp;
                 }
+                meanTemp /= inputs.Length;
 
                 if (atTemp[0] || atTemp[1] || atTemp[2])
                 {
-                    inputCookingTime += delta;
+                    float diff = meanTemp / highTarget;
+                    inputCookingTime += Math.Clamp((int)(diff), 1, 30) * delta;
+                }
+                else
+                {
+                    if (inputCookingTime > 0) inputCookingTime--;
                 }
             }
         }
 
-        public void ChangeTemperature()
+        public void HeatToFurnaceTemp(ItemSlot tarslot, float delta)
         {
+            if (tarslot.Itemstack == null || tarslot.Itemstack.Collectible.CombustibleProps == null) return;
 
+            ItemStack targetStack = tarslot.Itemstack;
+            float oldTemp = targetStack.Collectible.GetTemperature(Api.World, targetStack);
+            float nowTemp = oldTemp;
+            float meltingPoint = targetStack.Collectible.CombustibleProps.MeltingPoint;
+
+            if (oldTemp < furnaceTemperature)
+            {
+                float f = (1 + Math.Clamp((furnaceTemperature - oldTemp) / 30, 0, 1.6f)) * delta;
+                if (nowTemp >= meltingPoint) f /= 11;
+
+                float newTemp = changeTemperature(oldTemp, furnaceTemperature, f);
+                int maxTemp = targetStack.Collectible.CombustibleProps.MaxTemperature;
+
+                if (maxTemp > 0) newTemp = Math.Min(maxTemp, newTemp);
+                if (oldTemp != newTemp)
+                {
+                    targetStack.Collectible.SetTemperature(Api.World, targetStack, newTemp);
+                    nowTemp = newTemp;
+                }
+            }
+        }
+
+        public float changeTemperature(float fromTemp, float toTemp, float delta)
+        {
+            float diff = Math.Abs(fromTemp - toTemp);
+
+            delta = delta + delta * (diff / 28);
+
+            if (diff < delta) return toTemp;
+            if (fromTemp > toTemp) delta = -delta;
+            if (Math.Abs(fromTemp - toTemp) < 1) return toTemp;
+
+            return fromTemp + delta;
         }
 
         public void TestBehaviour()
