@@ -50,7 +50,8 @@ namespace SaltAndSulfur
                     maxFuelBurnTime = currCopts.BurnDuration;
                     maxTemperature = currCopts.BurnTemperature;
 
-                    fuel.Itemstack.StackSize -= 1;
+                    fuel.TakeOut(1);
+                    // fuel.Itemstack.StackSize -= 1;
                     if (fuel.Itemstack.StackSize <= 0)
                     {
                         fuel.Itemstack = null;

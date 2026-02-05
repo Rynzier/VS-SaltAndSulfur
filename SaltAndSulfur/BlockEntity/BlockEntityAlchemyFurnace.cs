@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Vintagestory.API.Client;
+using Vintagestory.API.Server;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.Util;
@@ -12,6 +13,8 @@ namespace SaltAndSulfur
 {
     public class BlockEntityAlchemyFurnace : BlockEntityOpenableContainer
     {
+        bool isBurning;
+
         // Necessary variables
         protected InventoryAlchemyFurnace inventory;
         protected GuiDialogAlchemyFurnace clientDialog;
@@ -37,6 +40,9 @@ namespace SaltAndSulfur
         {
             Block = Api.World.BlockAccessor.GetBlock(Pos);
 
+            MarkDirty(Api.Side == EnumAppSide.Server);
+
+
             if (Api is ICoreClientAPI && clientDialog != null)
             {
                 return;
@@ -51,6 +57,7 @@ namespace SaltAndSulfur
             inventory.AfterBlocksLoaded(Api.World);
 
             RegisterGameTickListener(UpdateFurnace, 100);
+            RegisterGameTickListener(On500msTick, 500);
         }
 
         public void UpdateFurnace(float delta)
@@ -60,10 +67,14 @@ namespace SaltAndSulfur
             float temp = smeltBehavior.FurnaceTemperature;
             float burnTime = smeltBehavior.BurnTimeLeft;
             float cookProg = smeltBehavior.SmeltProgress;
-            if (Api.Side == EnumAppSide.Server)
+            MarkDirty(true);
+        }
+
+        public void On500msTick(float delta)
+        {
+            if (Api is ICoreServerAPI && isBurning)
             {
-                Api.Logger.Debug("Temperature: {0} | Remaining Fuel: {1} | Cook Progress: {2}", [temp, burnTime, cookProg]);
-                MarkDirty();
+                MarkDirty(true);
             }
         }
 
